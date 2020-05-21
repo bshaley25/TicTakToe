@@ -1,5 +1,6 @@
 package com.BradleyHaley;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -47,8 +48,25 @@ public class TicTacToe {
     }
 
     public static void userMove(Game game, Scanner scan) {
-        int UserMove = scan.nextInt();
-        game.placeUserPosition(UserMove, 'X');
+
+        int userMove = 0;
+        while( !(userMove > 0) || !(userMove < 10) ) {
+            try {
+                userMove = scan.nextInt();
+//                game.placeUserPosition(UserMove, 'X');
+            } catch (InputMismatchException ime) {
+                System.out.println("Not a Valid Input.");
+                System.out.println("Exiting...");
+                System.exit(0);
+            }
+
+            if ( (userMove > 0) || (userMove < 10) ) {
+                System.out.println("Please Enter Valid Number(1-9)");
+            }
+
+        }
+
+        game.placeUserPosition(userMove, 'X');
     }
 
     public static void computerMove(Game game, Computer computer) {

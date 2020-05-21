@@ -2,7 +2,7 @@ package com.BradleyHaley;
 
 public class Game {
 
-    private char[][] board = {
+    private final char[][] board = {
             {' ','|',' ','|',' '},
             {'-','+','-','+','-'},
             {' ','|',' ','|',' '},
@@ -10,7 +10,7 @@ public class Game {
             {' ','|',' ','|',' '}
     };
 
-    private char[] placements = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
+    private final char[] placements = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
     public String[] winningPositions = new String[8];
 
@@ -80,7 +80,7 @@ public class Game {
         for (char[] row : this.board) {
             for (char col : row) {
                 if (col == ' ') {
-                    System.out.print(count);;
+                    System.out.print(count);
                     count++;
                 } else {
                     System.out.print(col);
