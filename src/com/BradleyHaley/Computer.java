@@ -4,15 +4,20 @@ import java.util.Random;
 
 public class Computer {
 
-    Random rand = new Random();
+    static Random rand = new Random();
 
     public int move(char[] placements) {
-        int randomChoice;
-        do {
-            randomChoice = rand.nextInt(placements.length);
-        } while(placements[randomChoice] != ' ');
 
-        return randomChoice;
+        int guess;
+        do {
+            guess = guess();
+        } while (placements[guess] != ' ');
+
+        return guess;
+    }
+
+    public static int guess() {
+        return rand.nextInt(9);
     }
 }
 

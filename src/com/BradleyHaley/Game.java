@@ -1,6 +1,7 @@
 package com.BradleyHaley;
 
 public class Game {
+
     private char[][] board = {
             {' ','|',' ','|',' '},
             {'-','+','-','+','-'},
@@ -8,10 +9,30 @@ public class Game {
             {'-','+','-','+','-'},
             {' ','|',' ','|',' '}
     };
+
     private char[] placements = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
+
+    public String[] winningPositions = new String[8];
+
+    private char winner;
+
+    private void updateWinningPositions() {
+        winningPositions[0] = "" + this.placements[0] + this.placements[1] + this.placements[2];
+        winningPositions[1] = "" + this.placements[3] + this.placements[4] + this.placements[5];
+        winningPositions[2] = "" + this.placements[6] + this.placements[7] + this.placements[8];
+        winningPositions[3] = "" + this.placements[0] + this.placements[3] + this.placements[6];
+        winningPositions[4] = "" + this.placements[1] + this.placements[4] + this.placements[7];
+        winningPositions[5] = "" + this.placements[2] + this.placements[5] + this.placements[8];
+        winningPositions[6] = "" + this.placements[0] + this.placements[4] + this.placements[8];
+        winningPositions[7] = "" + this.placements[6] + this.placements[4] + this.placements[2];
+    }
 
     public char[][] getBoard() {
         return this.board;
+    }
+
+    public char getWinner() {
+        return winner;
     }
 
     public char[] getPlacements() {
@@ -19,7 +40,30 @@ public class Game {
     }
 
     public boolean isOver() {
-        return false;
+
+        updateWinningPositions();
+
+        for(String position : winningPositions) {
+            if( isPositionWon(position) ) {
+                setWinner(position);
+                return true;
+            }
+        }
+
+        for(char placement : placements) {
+            if (placement == ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isPositionWon(String position) {
+        return position.equals("XXX") || position.equals("OOO");
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner.charAt(0);
     }
 
     public void printBoard() {
@@ -52,21 +96,11 @@ public class Game {
         }
     }
 
-    public void placePosition(int position, char XorO) {
+    public void placeUserPosition(int position, char XorO) {
         this.placements[position-1] = XorO;
-//        int count = 1;
-//        for (char[] row : this.board) {
-//            for (char col : row) {
-//                if (col == ' ' && count == position) {
-//                    col = 'X';
-//                    count++;
-//                } else if (col == ' ') {
-//                    count++;
-//                }
-//                System.out.print(col);
-//            }
-//            System.out.println();
-//        }
+    }
+    public void placeComputerPosition(int position, char XorO) {
+        this.placements[position] = XorO;
     }
 
 
