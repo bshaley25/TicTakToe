@@ -50,18 +50,22 @@ public class TicTacToe {
     public static void userMove(Game game, Scanner scan) {
 
         int userMove = 0;
-        while( !(userMove > 0) || !(userMove < 10) ) {
+        while(!(userMove < 10) || !(userMove > 0)) {
             try {
                 userMove = scan.nextInt();
-//                game.placeUserPosition(UserMove, 'X');
             } catch (InputMismatchException ime) {
                 System.out.println("Not a Valid Input.");
                 System.out.println("Exiting...");
                 System.exit(0);
             }
 
-            if ( (userMove > 0) || (userMove < 10) ) {
+            if ( !(userMove > 0) || !(userMove < 10) ) {
                 System.out.println("Please Enter Valid Number(1-9)");
+//                game.positionIsTaken(userMove);
+            } else if (game.positionIsTaken(userMove)) {
+                System.out.println("That move is already taken");
+                System.out.println("please choose another spot");
+                userMove = 0;
             }
 
         }
