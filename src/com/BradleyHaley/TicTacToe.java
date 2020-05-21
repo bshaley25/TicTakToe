@@ -1,5 +1,6 @@
 package com.BradleyHaley;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -7,16 +8,18 @@ public class TicTacToe {
     public static void main(String[] args) {
 	// write your code here
         Game game = new Game();
-        char[][] board = game.getBoard();
         Scanner scan = new Scanner(System.in);
+        Computer computer = new Computer();
 
-//        while(!game.over()) {
+//        while(!game.isOver()) {
             System.out.println("Where would you like to place a piece?");
-            game.printBoard(board);
-            game.showOptions(board);
-//            int position = scan.nextInt();
-//            Prompter.printGameBoardOptions(board, position);
-//            game.printBoard();
+            game.showOptions();
+            int UserMove = scan.nextInt();
+            game.placePosition(UserMove, 'X');
+            int computerMove =  computer.move(game.getPlacements());
+            game.placePosition(computerMove, 'O');
+            game.printBoard();
+
 //        }
 
 
