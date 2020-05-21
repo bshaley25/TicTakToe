@@ -1,34 +1,64 @@
 package com.BradleyHaley;
 
-import javax.swing.*;
-import java.io.PrintStream;
 import java.util.Scanner;
 
 public class TicTacToe {
 
+
     public static void main(String[] args) {
-	// write your code here
+
         Game game = new Game();
         Scanner scan = new Scanner(System.in);
         Computer computer = new Computer();
 
-        while(!game.isOver()) {
-            System.out.println("Where would you like to place a piece?");
-//            game.showOptions();
-            int UserMove = scan.nextInt();
-            game.placeUserPosition(UserMove, 'X');
-            if (game.isOver()) {
-                break;
-            }
-            int computerMove = computer.move(game.getPlacements());
-            game.placeComputerPosition(computerMove, 'O');
-//            System.out.println(computerMove);
+        intro(game);
+
+        while(!game.isWon()) {
+            userMove(game, scan);
+
+            if (game.isLastMove()) {
+                if (game.isWon()) gameWon(game);
+                else gameTie(game);
+            } else computerMove(game, computer);
+
             game.printBoard();
         }
 
-        System.out.printf("%s won the game!", game.getWinner());
+        finalPrint(game);
 
     }
 
+    public static void intro(Game game) {
+        System.out.println("Welcome to TicTakToe!");
+        System.out.println("Where would you like to place a piece?");
+        System.out.println("place a number 1-9 to place a piece");
+        game.showOptions();
+    }
+
+    public static void gameTie(Game game) {
+        System.out.println("Tie Game!");
+        game.printBoard();
+        System.exit(0);
+    }
+
+    public static void gameWon(Game game) {
+        finalPrint(game);
+        System.exit(0);
+    }
+
+    public static void userMove(Game game, Scanner scan) {
+        int UserMove = scan.nextInt();
+        game.placeUserPosition(UserMove, 'X');
+    }
+
+    public static void computerMove(Game game, Computer computer) {
+        int computerMove = computer.move(game.getPlacements());
+        game.placeComputerPosition(computerMove, 'O');
+    }
+
+    public static void finalPrint(Game game) {
+        game.printBoard();
+        System.out.printf("%s won the game!", game.getWinner());
+    }
 
 }

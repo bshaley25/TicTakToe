@@ -39,7 +39,7 @@ public class Game {
         return this.placements;
     }
 
-    public boolean isOver() {
+    public boolean isWon() {
 
         updateWinningPositions();
 
@@ -49,13 +49,7 @@ public class Game {
                 return true;
             }
         }
-
-        for(char placement : placements) {
-            if (placement == ' ') {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     private static boolean isPositionWon(String position) {
@@ -94,6 +88,15 @@ public class Game {
             }
             System.out.println();
         }
+    }
+
+    public boolean isLastMove() {
+        for(char placement : placements) {
+            if (placement == ' ') {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void placeUserPosition(int position, char XorO) {
