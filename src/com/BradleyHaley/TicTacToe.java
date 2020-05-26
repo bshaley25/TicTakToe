@@ -74,7 +74,7 @@ public class TicTacToe {
     }
 
     public static void computerMove(Game game, Computer computer) {
-        int computerMove = computer.move(game.getPlacements());
+        int computerMove = computer.bestMove(game.getPlacements());
         game.placeComputerPosition(computerMove, 'O');
     }
 

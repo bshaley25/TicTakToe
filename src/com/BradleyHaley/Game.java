@@ -107,7 +107,6 @@ public class Game {
     }
 
     public boolean positionIsTaken(int position) {
-
         return this.placements[position-1] != ' ';
 
     }
