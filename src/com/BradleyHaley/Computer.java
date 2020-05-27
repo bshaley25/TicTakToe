@@ -27,7 +27,9 @@ public class Computer {
         int bestMove = 0;
         for( char i=0; i < placements.length; i++) {
             if (placements[i] == ' ' ) {
-                int score = minimax(i, placements, 0, true);
+                Game game = new Game();
+                char[] copyPlacements = recreateGame(game, placements);
+                int score = minimax(i, copyPlacements,true, game);
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = i;
@@ -39,17 +41,44 @@ public class Computer {
         return bestMove;
     }
 
-    private static int minimax(int placement, char [] placements, int depth, boolean isMaximizing) {
-        Game game = new Game();
-        char[] copyPlacements = recreateGame(game, placements);
-//        System.out.println("placement = " + placement);
+    private static int minimax(int placement, char [] placements, boolean isMaximizing, Game game) {
 
-        if(isMaximizing) {
-        game.placeComputerPosition(placement, 'O');
-        System.out.println(Arrays.toString(game.getPlacements()));
+        int score = 0;
+
+        if(isMaximizing && game.isWon()){
+            return 1;
+        } else if(!isMaximizing && game.isWon()) {
+            return -1;
+        } else if(game.isTie()) {
+            return 0;
         }
 
-        return 1;
+        if(isMaximizing) {
+            game.placeComputerPosition(placement,'O');
+            for( char i=0; i < placements.length; i++) {
+                if (placements[i] == ' ' ) {
+                    score += minimax(i, placements, false, game);
+                }
+            }
+        } else {
+            game.placeUserPosition(placement+1,'X');
+            System.out.println(Arrays.toString(placements));
+            if(game.isWon()) {
+
+            }
+
+            for( char i=0; i < placements.length; i++) {
+                if (placements[i] == ' ' ) {
+                    score += minimax(i, placements, true, game);
+                }
+            }
+        }
+
+        return score;
+
+    }
+
+    private static void possibleMoves() {
 
     }
 

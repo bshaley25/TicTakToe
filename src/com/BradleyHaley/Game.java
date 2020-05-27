@@ -108,6 +108,14 @@ public class Game {
 
     public boolean positionIsTaken(int position) {
         return this.placements[position-1] != ' ';
+    }
 
+    public boolean isTie() {
+        for(char placement : this.getPlacements()){
+            if(placement == ' ') {
+                return false;
+            }
+        }
+        return true;
     }
 }

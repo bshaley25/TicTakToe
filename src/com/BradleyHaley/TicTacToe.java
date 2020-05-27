@@ -12,6 +12,7 @@ public class TicTacToe {
         Scanner scan = new Scanner(System.in);
         Computer computer = new Computer();
 
+
         intro(game);
 
         while(!game.isWon()) {
