@@ -27,12 +27,11 @@ public class Computer {
         int bestMove = 0;
         for( char i=0; i < placements.length; i++) {
             if (placements[i] == ' ' ) {
-                Game game = new Game();
-                char[] copyPlacements = recreateGame(game, placements);
-                int score = minimax(i, copyPlacements,true, game);
+                int score = minimax(i, placements,true);
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = i;
+                    System.out.println("bestScore = " + bestScore);
                 }
             }
         }
@@ -41,7 +40,9 @@ public class Computer {
         return bestMove;
     }
 
-    private static int minimax(int placement, char [] placements, boolean isMaximizing, Game game) {
+    private static int minimax(int placement, char [] placements, boolean isMaximizing) {
+        Game game = new Game();
+        char[] copyPlacements = recreateGame(game, placements);
 
         int score = 0;
 
@@ -55,21 +56,23 @@ public class Computer {
 
         if(isMaximizing) {
             game.placeComputerPosition(placement,'O');
+            if(game.isWon()) {
+                return 1;
+            }
             for( char i=0; i < placements.length; i++) {
                 if (placements[i] == ' ' ) {
-                    score += minimax(i, placements, false, game);
+                    score += minimax(i, copyPlacements, false);
                 }
             }
+
         } else {
             game.placeUserPosition(placement+1,'X');
-            System.out.println(Arrays.toString(placements));
             if(game.isWon()) {
-
+                return -1;
             }
-
             for( char i=0; i < placements.length; i++) {
                 if (placements[i] == ' ' ) {
-                    score += minimax(i, placements, true, game);
+                    score += minimax(i, copyPlacements, true);
                 }
             }
         }
